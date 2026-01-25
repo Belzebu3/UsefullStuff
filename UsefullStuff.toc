@@ -1,0 +1,14 @@
+## Interface: 120000
+## Title: UsefullStuff
+## Notes: Useful UI enhancements for World of Warcraft
+## Author: YourName
+## Version: 1.0.0
+## SavedVariables: UsefullStuffDB
+
+# Libraries
+Libs\LibStub.lua
+Libs\CallbackHandler-1.0.lua
+Libs\LibSharedMedia-3.0.lua
+
+# Main addon
+UsefullStuff.lua
