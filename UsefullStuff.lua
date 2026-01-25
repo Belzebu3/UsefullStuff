@@ -25,7 +25,6 @@ local defaults = {
     disableBlizzardCombatText = true,
     disableBlizzardBagBar = false,
     actionBarsMouseover = {
-        MainMenuBar = false,
         MultiBarBottomLeft = false,
         MultiBarBottomRight = false,
         MultiBarRight = false,
@@ -176,7 +175,6 @@ end
 
 -- Action Bar Mouseover functionality
 local actionBarFrames = {
-    MainMenuBar = "MainMenuBar",
     MultiBarBottomLeft = "MultiBarBottomLeft",
     MultiBarBottomRight = "MultiBarBottomRight",
     MultiBarRight = "MultiBarRight",
@@ -187,6 +185,23 @@ local actionBarFrames = {
 }
 
 local actionBarOriginalAlpha = {}
+local actionBarHoverStates = {}
+
+local function ShowActionBar(barName)
+    local frameName = actionBarFrames[barName]
+    local frame = _G[frameName]
+    if frame then
+        frame:SetAlpha(actionBarOriginalAlpha[barName] or 1)
+    end
+end
+
+local function HideActionBar(barName)
+    local frameName = actionBarFrames[barName]
+    local frame = _G[frameName]
+    if frame then
+        frame:SetAlpha(0)
+    end
+end
 
 local function ApplyActionBarMouseover(barName, enable)
     local frameName = actionBarFrames[barName]
@@ -202,17 +217,45 @@ local function ApplyActionBarMouseover(barName, enable)
             actionBarOriginalAlpha[barName] = frame:GetAlpha()
         end
 
+        -- Initialize hover state
+        actionBarHoverStates[barName] = false
+
         -- Set to transparent
         frame:SetAlpha(0)
 
-        -- Add mouseover scripts
+        -- Add mouseover scripts to the bar frame
         frame:SetScript("OnEnter", function(self)
-            self:SetAlpha(actionBarOriginalAlpha[barName] or 1)
+            actionBarHoverStates[barName] = true
+            ShowActionBar(barName)
         end)
 
         frame:SetScript("OnLeave", function(self)
-            self:SetAlpha(0)
+            actionBarHoverStates[barName] = false
+            C_Timer.After(0.1, function()
+                if not actionBarHoverStates[barName] then
+                    HideActionBar(barName)
+                end
+            end)
         end)
+
+        -- Also add mouseover to all buttons on the bar
+        for i = 1, 12 do
+            local button = _G[frameName .. "Button" .. i]
+            if button then
+                button:HookScript("OnEnter", function(self)
+                    actionBarHoverStates[barName] = true
+                    ShowActionBar(barName)
+                end)
+                button:HookScript("OnLeave", function(self)
+                    actionBarHoverStates[barName] = false
+                    C_Timer.After(0.1, function()
+                        if not actionBarHoverStates[barName] then
+                            HideActionBar(barName)
+                        end
+                    end)
+                end)
+            end
+        end
     else
         -- Remove mouseover scripts
         frame:SetScript("OnEnter", nil)
@@ -224,6 +267,8 @@ local function ApplyActionBarMouseover(barName, enable)
         else
             frame:SetAlpha(1)
         end
+
+        actionBarHoverStates[barName] = nil
     end
 end
 
@@ -750,11 +795,10 @@ local function CreateSettingsPanel()
 
     -- Define action bars with friendly names
     local actionBarList = {
-        {key = "MainMenuBar", name = "Main Action Bar (Bar 1)"},
-        {key = "MultiBarBottomLeft", name = "Bottom Left Bar (Bar 2)"},
-        {key = "MultiBarBottomRight", name = "Bottom Right Bar (Bar 3)"},
-        {key = "MultiBarRight", name = "Right Bar (Bar 4)"},
-        {key = "MultiBarLeft", name = "Right Bar 2 (Bar 5)"},
+        {key = "MultiBarBottomLeft", name = "Bar 2"},
+        {key = "MultiBarBottomRight", name = "Bar 3"},
+        {key = "MultiBarRight", name = "Bar 4"},
+        {key = "MultiBarLeft", name = "Bar 5"},
         {key = "MultiBar5", name = "Bar 6"},
         {key = "MultiBar6", name = "Bar 7"},
         {key = "MultiBar7", name = "Bar 8"},
