@@ -2,6 +2,9 @@
 *.lua.bak
 *.toc.bak
 
+# Claude Code local settings
+.claude/
+
 # OS specific files
 .DS_Store
 Thumbs.db
