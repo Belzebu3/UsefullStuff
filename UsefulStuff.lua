@@ -64,8 +64,8 @@ local defaults = {
     },
     gateway = {
         enabled = true,
-        text = "Gateway usable.",
-        missingText = "Gateway Control Shard is missing",
+        text = "Gateway usable",
+        missingText = "Keybind Gateway Control Shard is missing",
         font = "Friz Quadrata TT",
         fontSize = 24,
         x = 0,
