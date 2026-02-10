@@ -1,9 +1,12 @@
-## Interface: 120000
+## Interface: 120000, 120001
 ## Title: UsefulStuff
-## Notes: Useful UI enhancements for World of Warcraft
-## Author: YourName
 ## Version: 1.0.0
+## Notes: Useful UI enhancements
+## Author: Yulai-Blackmoore
+## DefaultState: Enable
 ## SavedVariables: UsefulStuffDB
+## X-Curse-Project-ID: 1458939
+
 
 # Libraries
 Libs\LibStub.lua
