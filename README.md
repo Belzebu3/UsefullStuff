@@ -1,4 +1,4 @@
-# UsefullStuff
+# UsefulStuff
 
 Useful UI enhancements for World of Warcraft.
 
@@ -23,12 +23,12 @@ Useful UI enhancements for World of Warcraft.
 ## Installation
 
 1. Download the latest release
-2. Extract the `UsefullStuff` folder to `World of Warcraft\_retail_\Interface\AddOns\`
+2. Extract the `UsefulStuff` folder to `World of Warcraft\_retail_\Interface\AddOns\`
 3. Restart World of Warcraft or reload UI (`/reload`)
 
 ## Configuration
 
-Access settings via: `ESC > Options > AddOns > UsefullStuff`
+Access settings via: `ESC > Options > AddOns > UsefulStuff`
 
 ## Requirements
 
